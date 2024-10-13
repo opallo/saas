@@ -33,39 +33,3 @@ A minimal, full-stack AI-powered SaaS project with subscription-based services.
 4. User interacts with **Gradio** to use the AI service (OpenAI API).
 5. Data is stored and managed in **Supabase** using **Prisma**.
 6. App is deployed and updated on **Vercel**.
-
----
-
-## **How to Run**
-
-1. Set up **Next.js** app:
-   ```bash
-   npx create-next-app@latest
-   ```
-2. Integrate **Clerk** & **Stripe** for auth and payments.
-3. Add **Gradio** as the AI interaction interface.
-4. Use **Supabase** + **Prisma** for the database.
-5. Deploy on **Vercel**.
-
----
-
-## **Monetization Strategy**
-
-1. Subscription plans via **Stripe**.
-2. Push ads to generate external traffic.
-3. Minimal maintenance after setup; scalable on demand.
-
----
-
-## **Potential Future Uses**
-
-- Reuse this template to create niche AI tools:
-  - **AI Podcast Script Generator**
-  - **AI Dream Interpreter**
-  - **AI Personalized Recipes**
-
----
-
-## **License**
-
-Open for personal and commercial use.
