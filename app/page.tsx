@@ -1,25 +1,11 @@
-// components/Header.tsx
+import Header from '../components/Header';
 
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
-
-const Header: React.FC = () => {
+export default function HomePage() {
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', padding: 20 }}>
-      <h1>jonkler LLM 😈</h1>
-      <SignedIn>
-        {/* Render the UserButton with TypeScript typings */}
-        <UserButton 
-          showName={false}  // Show user's name
-          userProfileMode="modal" // Open user profile as a modal
-          afterSwitchSessionUrl="/" // Redirect after session switch
-        />
-      </SignedIn>
-      <SignedOut>
-        {/* Render the SignInButton for users who are not signed in */}
-        <SignInButton />
-      </SignedOut>
-    </header>
+    <div>
+      <Header />
+      <h1>Welcome to the Homepage!</h1>
+      <p>This is the main content of the page.</p>
+    </div>
   );
-};
-
-export default Header;
+}
