@@ -1,22 +1,15 @@
-import { ClerkProvider } from '@clerk/nextjs'
-import './globals.css'
-import type { Metadata } from 'next'
+// src/app/layout.tsx
 
-export const metadata: Metadata = {
-  title: 'AI Chat Application',
-  description: 'Experience AI-driven conversations',
-}
+import { ClerkProvider } from '@clerk/nextjs';
+import Page from './page'; // Corrected import path
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
+      <Page />
+      {children} {/* Ensure children are wrapped inside the ClerkProvider */}
     </ClerkProvider>
-  )
-}
+  );
+};
+
+export default RootLayout;
