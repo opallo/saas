@@ -1,15 +1,25 @@
 // src/app/layout.tsx
 
 import { ClerkProvider } from '@clerk/nextjs';
-import Page from './page'; // Corrected import path
+import './globals.css';
 
-const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <ClerkProvider>
-      <Page />
-      {children} {/* Ensure children are wrapped inside the ClerkProvider */}
-    </ClerkProvider>
-  );
+export const metadata = {
+  title: 'jonkler LLM',
+  description: 'AI-powered SaaS application',
 };
 
-export default RootLayout;
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
+      </body>
+    </html>
+  );
+}
