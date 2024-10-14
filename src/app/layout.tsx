@@ -1,22 +1,25 @@
-// src/app/layout.tsx
-import { ClerkProvider } from '@clerk/nextjs';
-import './globals.css'; // Import your global CSS if you have any
+// components/Header.tsx
 
-export const metadata = {
-  title: 'Your App Title',
-  description: 'Your app description',
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+
+const Header: React.FC = () => {
+  return (
+    <header style={{ display: 'flex', justifyContent: 'space-between', padding: 20 }}>
+      <h1>My App</h1>
+      <SignedIn>
+        {/* Render the UserButton with TypeScript typings */}
+        <UserButton 
+          showName={true}  // Show user's name
+          userProfileMode="modal" // Open user profile as a modal
+          afterSwitchSessionUrl="/" // Redirect after session switch
+        />
+      </SignedIn>
+      <SignedOut>
+        {/* Render the SignInButton for users who are not signed in */}
+        <SignInButton />
+      </SignedOut>
+    </header>
+  );
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </ClerkProvider>
-  );
-}
+export default Header;
