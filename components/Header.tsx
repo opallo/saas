@@ -1,3 +1,5 @@
+// app/some-component/page.tsx or your component file
+
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 const Header: React.FC = () => {
