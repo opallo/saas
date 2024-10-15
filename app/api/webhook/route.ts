@@ -1,30 +1,44 @@
-import Stripe from "stripe"
-import { NextResponse, NextRequest } from "next/server"
-import { json } from "stream/consumers"
+import Stripe from "stripe";
+import { NextResponse, NextRequest } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-export async function POST(req: NextRequest, res: NextResponse) {
-  const payload = await req.text()
-  const response = JSON.parse(payload)
-  const sig = req.headers.get("Stripe-Signature")
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export async function POST(req: NextRequest) {
+  const payload = await req.text();
+  const res = JSON.parse(payload);
 
-  const dateTime = new Date(response.created * 1000).toLocaleDateString()
-  const timeString = new Date(response.created * 1000).toLocaleTimeString()
+  const sig = req.headers.get("Stripe-Signature");
+
+  const dateTime = new Date(res?.created * 1000).toLocaleDateString();
+  const timeString = new Date(res?.created * 1000).toLocaleDateString();
 
   try {
     let event = stripe.webhooks.constructEvent(
-      payload, 
-      sig!, 
+      payload,
+      sig!,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
 
-    
+    console.log("Event", event?.type);
+    // charge.succeeded
+    // payment_intent.succeeded
+    // payment_intent.created
 
-    console.log("event", event.type)
-    return NextResponse.json({status: "Success", event: event.type})
-    
-  } catch(error){
-    return NextResponse.json({status: "Failed", error});
+    console.log(
+      res?.data?.object?.billing_details?.email, // email
+      res?.data?.object?.amount, // amount
+      JSON.stringify(res), // payment info
+      res?.type, // type
+      String(timeString), // time
+      String(dateTime), // date
+      res?.data?.object?.receipt_email, // email
+      res?.data?.object?.receipt_url, // url
+      JSON.stringify(res?.data?.object?.payment_method_details), // Payment method details
+      JSON.stringify(res?.data?.object?.billing_details), // Billing details
+      res?.data?.object?.currency // Currency
+    );
+
+    return NextResponse.json({ status: "sucess", event: event.type, response: res });
+  } catch (error) {
+    return NextResponse.json({ status: "Failed", error });
   }
-
 }
