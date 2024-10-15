@@ -16,7 +16,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       payload, 
       sig!, 
       process.env.STRIPE_WEBHOOK_SECRET!
-    )
+    );
+
+    
 
     console.log("event", event.type)
     return NextResponse.json({status: "Success", event: event.type})
