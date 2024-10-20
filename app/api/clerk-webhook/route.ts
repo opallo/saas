@@ -1,7 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import { createClient } from '@/utils/supabase/server'
+import { supabase } from '@/utils/supabase/client'
 
 
 
@@ -57,12 +57,34 @@ export async function POST(req: Request) {
   // console.log('Webhook body:', body)
 
 
-  
-  if(evt.type === 'session.created') {
+  // Check if user exists in supabase and retrieve user data
+  if (evt.type === 'session.created') {
+    
+    // Get user ID from event data
     console.log('userID:', evt.data.user_id)
-  }
-  
-  
 
+    // Query supabase to check if user exists
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', evt.data.user_id)
+
+    // If no user is found, create a new user in supabase
+    if(!data || data.length === 0){
+      console.log("No user found")  
+    }else{
+      console.log("User found: " + JSON.stringify(data))
+    }
+
+    // Handle any errors that occurred during the query
+    if (error) {
+      console.error('Error fetching user:', error)
+      }
+
+    // Log the user data
+    console.log("DATA: " + JSON.stringify(data))
+  }
+
+  // Return a success response
   return new Response('', { status: 200 })
 }
