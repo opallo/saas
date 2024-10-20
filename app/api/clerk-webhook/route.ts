@@ -1,6 +1,9 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { createClient } from '@/utils/supabase/server'
+
+
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -48,14 +51,18 @@ export async function POST(req: Request) {
 
   // Do something with the payload
   // For this guide, you simply log the payload to the console
-  const { id } = evt.data
-  const eventType = evt.type
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  console.log('Webhook body:', body)
+  // const { id } = evt.data
+  // const eventType = evt.type
+  // console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
+  // console.log('Webhook body:', body)
 
+
+  
   if(evt.type === 'session.created') {
-    console.log('userID:', evt.data.id)
+    console.log('userID:', evt.data.user_id)
   }
+  
+  
 
   return new Response('', { status: 200 })
 }
