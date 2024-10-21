@@ -24,4 +24,5 @@ export async function POST(req: NextRequest) {
     console.error('Error creating Stripe session:', err);
     return NextResponse.json({ error: 'Error creating Stripe session' }, { status: 500 });
   }
+  
 }
