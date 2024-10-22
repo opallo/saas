@@ -73,6 +73,7 @@ export default function Home() {
     <div>
       <Header />
       <CheckoutButton />
+      
       <h1>Tasks</h1>
 
       {loading && <p>Loading...</p>}
