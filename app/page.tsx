@@ -5,8 +5,15 @@ import { createClient } from '@supabase/supabase-js'
 import Header from '@/components/Header'
 import CheckoutButton from '@/components/CheckoutButton'
 
+// Add this interface at the top of the file, after the imports
+interface Task {
+  id: number;
+  name: string;
+  // Add other properties if needed
+}
+
 export default function Home() {
-  const [tasks, setTasks] = useState<any[]>([])
+  const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
   // The `useUser()` hook will be used to ensure that Clerk has loaded data about the logged in user
@@ -50,7 +57,7 @@ export default function Home() {
     async function loadTasks() {
       setLoading(true)
       const { data, error } = await client.from('tasks').select()
-      if (!error) setTasks(data)
+      if (!error) setTasks(data as Task[])
       setLoading(false)
     }
 
@@ -75,7 +82,7 @@ export default function Home() {
 
       {loading && <p>Loading...</p>}
 
-      {!loading && tasks.length > 0 && tasks.map((task: any) => <p key={task.id}>{task.name}</p>)}
+      {!loading && tasks.length > 0 && tasks.map((task: Task) => <p key={task.id}>{task.name}</p>)}
 
       {!loading && tasks.length === 0 && <p>No tasks found</p>}
 
