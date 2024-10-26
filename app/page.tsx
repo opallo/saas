@@ -4,7 +4,6 @@ import { useSession, useUser } from '@clerk/nextjs'
 import { createClient } from '@supabase/supabase-js'
 import Header from '@/components/Header'
 import CheckoutButton from '@/components/CheckoutButton'
-import OpenAI from 'openai'
 
 // Define the Task interface
 interface Task {
