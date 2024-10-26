@@ -4,8 +4,11 @@ import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 export const metadata = {
-  title: 'jonkler LLM',
-  description: 'AI-powered SaaS application',
+  title: 'SaaS Factory',
+  description: 'Factory for building SaaS applications',
+  icons: {
+    icon: './favicon.ico',
+  },
 };
 
 export default function RootLayout({
