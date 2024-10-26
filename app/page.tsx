@@ -4,6 +4,7 @@ import { useSession, useUser } from '@clerk/nextjs'
 import { createClient } from '@supabase/supabase-js'
 import Header from '@/components/Header'
 import CheckoutButton from '@/components/CheckoutButton'
+import Chat from '@/components/Chat'
 
 // Add this interface at the top of the file, after the imports
 interface Task {
@@ -77,6 +78,9 @@ export default function Home() {
     <div>
       <Header />
       <CheckoutButton />
+      <div>
+        <Chat />
+      </div>
 
       <h1>Tasks</h1>
 
@@ -98,5 +102,6 @@ export default function Home() {
         <button type="submit">Add</button>
       </form>
     </div>
+
   )
 }
