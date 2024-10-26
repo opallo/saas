@@ -4,8 +4,8 @@ import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 export const metadata = {
-  title: 'SaaS Factory',
-  description: 'Factory for building SaaS applications',
+  title: '🎈 SaaS App 🎈',
+  description: 'Foundation for building SaaS applications - have fun!!',
   icons: {
     icon: './favicon.ico',
   },
