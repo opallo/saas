@@ -1,13 +1,12 @@
 # AI SaaS Template
 
-A minimal, full-stack AI-powered SaaS project with subscription-based services.
+A minimal, full-stack SaaS starter you can clone to kickstart new projects quickly.
 
 ## **Tech Stack**
 
 ### **Frontend**
 
 - **Next.js**: Core app framework handling SSR, routing, UI, and API routes.
-- **Gradio**: Frontend interface for interacting with AI (OpenAI) models.
 
 ### **Backend**
 
@@ -30,6 +29,15 @@ A minimal, full-stack AI-powered SaaS project with subscription-based services.
 1. User signs up or logs in via **Clerk**.
 2. Subscription is processed through **Stripe**.
 3. After login, user accesses dashboard via **Next.js**.
-4. User interacts with **Gradio** to use the AI service (OpenAI API).
-5. Data is stored and managed in **Supabase** using **Prisma**.
-6. App is deployed and updated on **Vercel**.
+4. Data is stored and managed in **Supabase** using **Prisma**.
+5. App is deployed and updated on **Vercel**.
+
+## **Starting a New Project**
+
+Use the provided script to copy this template into a fresh directory and reinitialize git:
+
+```bash
+./scripts/init-new.sh my-new-app
+```
+
+This copies the template into `my-new-app`, installs dependencies, and sets up a new git repository.
