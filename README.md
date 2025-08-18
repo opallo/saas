@@ -9,7 +9,7 @@ A minimal Next.js, Clerk, Stripe, and Supabase foundation for quickly launching 
 - **Stripe** payments with Checkout
 - **Supabase** database and edge functions
 - **Tailwind CSS** styling
-- Polished landing page to kickstart iteration
+- Placeholder landing page to make iteration pleasant
 
 ## Getting Started
 
@@ -65,4 +65,3 @@ Use the helper script to copy the template into a new folder and reinitialize gi
 ---
 
 This repo aims to be a clean starting point so you can focus on shipping features and validating ideas fast.
-
