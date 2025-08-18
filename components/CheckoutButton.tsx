@@ -13,14 +13,14 @@ const CheckoutButton: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          quantity: 1, // You can make this dynamic based on user input
+          quantity: 1,
         }),
       });
 
       const data = await res.json();
 
       if (data.url) {
-        window.location.href = data.url; // Redirect user to Stripe Checkout page
+        window.location.href = data.url;
       } else {
         console.error('Error creating checkout session:', data);
       }
@@ -32,10 +32,15 @@ const CheckoutButton: React.FC = () => {
   };
 
   return (
-    <button onClick={handleCheckout} disabled={loading}>
-      {loading ? 'Processing...' : 'Checkout'}
+    <button
+      onClick={handleCheckout}
+      disabled={loading}
+      className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:opacity-50"
+    >
+      {loading ? 'Processing...' : 'Get Started'}
     </button>
   );
 };
 
 export default CheckoutButton;
+

@@ -1,102 +1,67 @@
-'use client'
-import { useEffect, useState, useMemo } from 'react'
-import { useSession, useUser } from '@clerk/nextjs'
-import { createClient } from '@supabase/supabase-js'
-import Header from '@/components/Header'
-import CheckoutButton from '@/components/CheckoutButton'
+import Header from "@/components/Header";
+import CheckoutButton from "@/components/CheckoutButton";
+import Footer from "@/components/Footer";
 
-// Add this interface at the top of the file, after the imports
-interface Task {
-  id: number;
-  name: string;
-  // Add other properties if needed
-}
+const features = [
+  {
+    title: "Authentication",
+    description: "Clerk is wired up for sign ups and sessions out of the box.",
+  },
+  {
+    title: "Payments",
+    description: "Stripe Checkout is pre-configured so you can charge users quickly.",
+  },
+  {
+    title: "Database",
+    description: "Supabase gives you a Postgres database with an instant API.",
+  },
+];
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [loading, setLoading] = useState(true)
-  const [name, setName] = useState('')
-  // The `useUser()` hook will be used to ensure that Clerk has loaded data about the logged in user
-  const { user } = useUser()
-  // The `useSession()` hook will be used to get the Clerk session object
-  const { session } = useSession()
-
-  // Create a custom supabase client that injects the Clerk Supabase token into the request headers
-  const client = useMemo(() => {
-    return createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        global: {
-          // Get the custom Supabase token from Clerk
-          fetch: async (url, options = {}) => {
-            const clerkToken = await session?.getToken({
-              template: 'supabase',
-            })
-
-            // Insert the Clerk Supabase token into the headers
-            const headers = new Headers(options?.headers)
-            headers.set('Authorization', `Bearer ${clerkToken}`)
-
-            // Now call the default fetch
-            return fetch(url, {
-              ...options,
-              headers,
-            })
-          },
-        },
-      },
-    )
-  }, [session])
-
-  // This `useEffect` will wait for the User object to be loaded before requesting
-  // the tasks for the logged in user
-  useEffect(() => {
-    if (!user) return
-
-    async function loadTasks() {
-      setLoading(true)
-      const { data, error } = await client.from('tasks').select()
-      if (!error) setTasks(data as Task[])
-      setLoading(false)
-    }
-
-    loadTasks()
-  }, [user, client])
-
-  async function createTask(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const { data, error } = await client.from('tasks').insert({ name }).select()
-    if (!error && data) {
-      setTasks([...tasks, ...data])
-      setName('')
-    }
-  }
-
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <CheckoutButton />
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="bg-gradient-to-b from-gray-900 to-black py-32 text-center">
+          <h1 className="mx-auto max-w-2xl text-5xl font-bold tracking-tight text-white sm:text-6xl">
+            Launch your SaaS faster
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+            A minimal starter with auth, payments, and database ready so you can
+            focus on your product.
+          </p>
+          <div className="mt-10 flex justify-center">
+            <CheckoutButton />
+          </div>
+        </section>
 
-      <h1>Tasks</h1>
+        {/* Features */}
+        <section className="py-24">
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 px-6 md:grid-cols-3">
+            {features.map((feature) => (
+              <div key={feature.title} className="text-center">
+                <h3 className="text-xl font-semibold text-white">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-gray-400">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-      {loading && <p>Loading...</p>}
-
-      {!loading && tasks.length > 0 && tasks.map((task: Task) => <p key={task.id}>{task.name}</p>)}
-
-      {!loading && tasks.length === 0 && <p>No tasks found</p>}
-
-      <form onSubmit={createTask}>
-        <input
-          autoFocus
-          type="text"
-          name="name"
-          placeholder="Enter new task"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-        <button type="submit">Add</button>
-      </form>
+        {/* Call to action */}
+        <section className="bg-gradient-to-b from-black to-gray-900 py-24 text-center">
+          <h2 className="text-3xl font-bold text-white">Ready to build?</h2>
+          <p className="mx-auto mt-4 max-w-md text-gray-400">
+            Grab the starter and start shipping features today.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <CheckoutButton />
+          </div>
+        </section>
+      </main>
+      <Footer />
     </div>
-  )
+  );
 }
